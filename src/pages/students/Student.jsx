@@ -11,8 +11,7 @@ export default function Student() {
       try {
         const res = await axios.get(
           "https://692458a93ad095fb8473d421.mockapi.io/sutudents"
-        ); 
-
+        ); // sutudents → students
         setStudents(res.data);
         setLoading(false);
       } catch (err) {

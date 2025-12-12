@@ -33,7 +33,7 @@ export default function Student() {
     <div className=" p-5">
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-4 gap-5">
         {students.map((el) => (
-          <div class="bg-gradient-to-b from-gray-500 to-gray-900 rounded-3xl shadow-2xl p-8 w-96 max-w-full text-white">
+          <div class="bg-linear-to-b from-gray-500 to-gray-900 rounded-3xl shadow-2xl p-8 w-96 max-w-full text-white">
             <div class="flex justify-center mb-6">
               <div class="relative">
                 <img

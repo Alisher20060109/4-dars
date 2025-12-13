@@ -1,16 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import loadings from "../../assets/loading.svg";
+import { toast } from "react-toastify";
 
 export default function Teacher() {
   const [teachers, setTeachers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     async function getAllTeachers() {
       try {
         let res = await axios.get(
-          "https://692458a93ad095fb8473d421.mockapi.io/teachers"
+          `https://692458a93ad095fb8473d421.mockapi.io/teachers?name=${search}`
         );
         setTeachers(res.data);
         setLoading(false);
@@ -20,8 +22,17 @@ export default function Teacher() {
     }
 
     getAllTeachers();
-  }, []);
+  },  [search]);
 
+  async function deleteTeacher(id) {
+    try {
+      await axios.delete(`https://692458a93ad095fb8473d421.mockapi.io/teachers/${id}`);
+      toast.success(`siz ${id} - id li o'qituvchini o'chirdingiz`);
+      setTeachers(teachers.filter((el) => el.id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  }
   if (loading) {
     return (
       <div className="w-200 h-200 fixed left-130 top-0">
@@ -32,6 +43,14 @@ export default function Teacher() {
 
   return (
     <div className=" p-5">
+      <div className="max-w-300 w-full pb-5">
+        <input
+          onChange={(e) => setSearch(e.target.value)}
+          type="search"
+          placeholder="O'qtuvchilarni qidirsh"
+          className=" border-2 border-amber-700 p-2 rounded text-[16px] font-black  w-full "
+        />
+      </div>
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-4 gap-5">
         {teachers.map((el) => (
           <div class="bg-linear-to-b from-blue-900 to-red-900 rounded-3xl shadow-2xl p-8 w-96  max-w-full text-white">
@@ -133,7 +152,7 @@ export default function Teacher() {
               <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full transition">
                 Edit
               </button>
-              <button class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-full transition">
+              <button onClick={() => deleteTeacher(el.id)} class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-full transition">
                 Delete
               </button>
             </div>

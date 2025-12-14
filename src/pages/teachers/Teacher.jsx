@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import loadings from "../../assets/loading.svg";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export default function Teacher() {
   const [teachers, setTeachers] = useState([]);
@@ -42,7 +43,8 @@ export default function Teacher() {
   }
 
   return (
-    <div className=" p-5">
+    <div  className=" p-5">
+
       <div className="max-w-300 w-full pb-5">
         <input
           onChange={(e) => setSearch(e.target.value)}
@@ -53,14 +55,17 @@ export default function Teacher() {
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-4 gap-5">
         {teachers.map((el) => (
-          <div class="bg-linear-to-b from-blue-900 to-red-900 rounded-3xl shadow-2xl p-8 w-96  max-w-full text-white">
+          <div key={el.id}  class="bg-linear-to-b from-blue-900 to-red-900 rounded-3xl shadow-2xl p-8 w-96  max-w-full text-white">
             <div class="flex justify-center mb-6">
               <div class="relative">
-                <img
-                  src={el.avatar}
-                  className="w-40 h-40 rounded-full border-4 border-pink-500 shadow-lg"
-                  alt=""
-                />
+                <Link to={`/singl-teachers/${el.id}`}>
+                  <img
+                    class="w-32 h-32 rounded-full border-4 border-white object-cover"   
+                    src={el.avatar}
+                    alt={el.name}
+                  />
+                </Link>
+                <span class="absolute bottom-0 right-0 bg-green-500 border-4 border-white w-8 h-8 rounded-full"></span>
               </div>
             </div>
 
